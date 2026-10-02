@@ -5,8 +5,7 @@ only auth or server problems return 4xx/5xx.
 """
 from datetime import date
 
-from fastapi import Depends, FastAPI, Request
-from fastapi.responses import Response
+from fastapi import Depends, FastAPI
 from pydantic import BaseModel, Field
 
 import repository
@@ -14,7 +13,8 @@ import returns
 from auth import require_tool_secret
 from normalize import normalize_order_id, normalize_phone_last4
 
-app = FastAPI(title="Nova Mart order API", version="0.1.0")
+# /docs and /openapi.json are routed to the Worker in wrangler.jsonc; /redoc is not, so it is off.
+app = FastAPI(title="Nova Mart order API", version="0.1.0", redoc_url=None)
 
 
 class OrderLookup(BaseModel):
@@ -87,14 +87,3 @@ async def return_eligibility(body: OrderLookup):
         "days_since_delivery": decision.days_since_delivery,
         "non_returnable_items": decision.non_returnable_items,
     }
-
-
-# Everything else: serve the demo page from Workers Static Assets.
-@app.get("/{path:path}")
-async def frontend(path: str, request: Request):
-    env = request.scope.get("env")
-    if env is None:  # running outside Workers (tests)
-        return Response(status_code=404)
-    resp = await env.ASSETS.fetch(f"https://assets.local/{path}")
-    body = await resp.bytes()
-    return Response(content=body, status_code=resp.status, headers=resp.headers)
