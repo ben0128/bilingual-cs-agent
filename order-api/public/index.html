@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nova Mart 雙語客服 Demo</title>
+<style>
+  :root { color-scheme: light; }
+  body { margin: 0; background: #F3F4F6; color: #16181D;
+         font-family: "IBM Plex Sans", "Noto Sans TC", system-ui, sans-serif; }
+  main { max-width: 880px; margin: 0 auto; padding: 32px 20px 120px; display: grid; gap: 20px; }
+  h1 { margin: 0; font-size: 26px; }
+  .sub { margin: 4px 0 0; color: #586070; font-size: 14px; }
+  section { background: #fff; border: 1px solid #E2E4E9; border-radius: 16px; padding: 20px 22px; }
+  h2 { margin: 0 0 12px; font-size: 16px; }
+  .say { display: flex; gap: 10px; align-items: flex-start; margin: 8px 0; font-size: 14px; line-height: 1.5; }
+  .tag { flex: none; padding: 2px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; }
+  .zh { background: #E8EEFC; color: #1D4ED8; }
+  .en { background: #FDF0E4; color: #B45309; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th, td { text-align: left; padding: 8px 0; border-bottom: 1px solid #EEF0F3; }
+  th { color: #586070; font-weight: 500; }
+  td.id { font-family: "IBM Plex Mono", ui-monospace, monospace; }
+  .note { color: #586070; font-size: 13px; }
+  .grid { display: grid; gap: 20px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Nova Mart 客服 Demo</h1>
+    <p class="sub">中英雙語語音 Agent · ElevenAgents × Cloudflare Workers 上的 Python API。按右下角按鈕開始通話。</p>
+  </header>
+
+  <div class="grid">
+    <section>
+      <h2>試試這樣說</h2>
+      <div class="say"><span class="tag zh">中</span><span>我的訂單 58210473 到哪了？</span></div>
+      <div class="say"><span class="tag en">EN</span><span>Can I return my other order 58210488?</span></div>
+      <div class="say"><span class="tag zh">中</span><span>我想 return 58210502（中英夾雜，Agent 應該維持中文）</span></div>
+      <div class="say"><span class="tag en">EN</span><span>Can you speak Chinese?</span></div>
+      <div class="say"><span class="tag zh">中</span><span>你們的退貨規定是什麼？</span></div>
+    </section>
+
+    <section>
+      <h2>測試訂單</h2>
+      <table>
+        <thead><tr><th>訂單編號</th><th>情境</th></tr></thead>
+        <tbody>
+          <tr><td class="id">58210473</td><td>已出貨，明天到</td></tr>
+          <tr><td class="id">58210488</td><td>3 天前送達，可退</td></tr>
+          <tr><td class="id">58210491</td><td>超過 7 天，不能退</td></tr>
+          <tr><td class="id">58210502</td><td>生鮮，不能退</td></tr>
+          <tr><td class="id">58210515</td><td>處理中</td></tr>
+          <tr><td class="id">58210520</td><td>已取消</td></tr>
+        </tbody>
+      </table>
+      <p class="note">手機末 4 碼一律是 0912。</p>
+    </section>
+  </div>
+</main>
+
+<!-- ElevenAgents widget. Replace YOUR_AGENT_ID. If this snippet differs from the one in
+     your agent's Widget tab, use the dashboard's version. -->
+<elevenlabs-convai agent-id="YOUR_AGENT_ID"></elevenlabs-convai>
+<script src="https://unpkg.com/@elevenlabs/convai-widget-embed" async type="text/javascript"></script>
+</body>
+</html>

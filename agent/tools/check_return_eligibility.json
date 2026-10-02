@@ -1,0 +1,24 @@
+{
+  "_note": "Reference shape. Same setup as get_order_status.json.",
+  "type": "webhook",
+  "name": "check_return_eligibility",
+  "description": "Check whether one specific order can still be returned, and why. Use for questions about a particular order, not general policy.",
+  "api_schema": {
+    "url": "https://<WORKER_URL>/tools/return-eligibility",
+    "method": "POST",
+    "request_body_schema": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string",
+          "description": "8-digit order ID, digits only, no spaces or dashes. Convert spoken Chinese numerals to digits."
+        },
+        "phone_last4": {
+          "type": "string",
+          "description": "Last 4 digits of the phone number on the order, digits only. Reuse it if the customer gave it earlier in the call."
+        }
+      },
+      "required": ["order_id", "phone_last4"]
+    }
+  }
+}
