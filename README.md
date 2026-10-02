@@ -22,6 +22,7 @@ bilingual-cs-agent/
 │   ├── pyproject.toml
 │   └── wrangler.jsonc
 └── agent/                     # 要貼進 ElevenAgents 的內容
+    ├── setup_agent.py         # 用 API 一次建好 Agent（第 5 步的自動版）
     ├── system-prompt.md
     ├── first-messages.md
     ├── language-detection-description.txt
@@ -87,6 +88,22 @@ npx wrangler secret put TOOL_SECRET # 貼上同一把密鑰
 
 ## 5. 在 ElevenAgents 建 Agent
 
+### 自動（建議）
+
+`agent/setup_agent.py` 用 API 建好下面手動步驟的所有東西：secret、知識庫、兩支 webhook tool、Agent、中英文聲音，並限制只有你的 workers.dev 網域能開啟通話。只用 Python 標準函式庫，不用裝套件。
+
+1. 在 ElevenLabs 建一把 API key，權限只開 **ElevenAgents 讀寫**、**Voices 讀寫**，其他全關。
+2. 寫進 repo 根目錄的 `.env`（已在 `.gitignore`）：`ELEVENLABS_API_KEY=...`
+3. 執行（`TOOL_SECRET` 從 `order-api/.dev.vars` 讀）：
+
+```bash
+WORKER_URL=https://nova-order-api.<你的子網域>.workers.dev python3 agent/setup_agent.py
+```
+
+最後一行會印出 Agent ID。改了 prompt 或知識庫之後重跑同一個指令即可，已存在的東西會沿用、Agent 會更新。
+
+### 手動
+
 1. 新增一支 Agent，主要語言選**中文**，Additional Languages 加**英文**。
 2. 每種語言各選一個聲音：中文挑台灣口音，英文挑英文母語。
 3. 首句照 `agent/first-messages.md` 設定，英文那句要手動改掉自動翻譯。
@@ -103,7 +120,7 @@ npx wrangler secret put TOOL_SECRET # 貼上同一把密鑰
 
 ## 6. Demo 頁
 
-1. 把 `order-api/public/index.html` 裡的 `YOUR_AGENT_ID` 換成你的 Agent ID。
+1. 把 `order-api/public/index.html` 裡 `agent-id` 換成你的 Agent ID。
 2. `uv run pywrangler deploy`
 3. 打開 workers.dev 網址，右下角就是通話按鈕。
 

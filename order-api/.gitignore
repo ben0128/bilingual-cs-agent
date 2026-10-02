@@ -6,3 +6,5 @@ __pycache__/
 .wrangler/
 node_modules/
 python_modules/
+pylock.toml
+.venv-workers/
