@@ -22,11 +22,14 @@ API = "https://api.elevenlabs.io"
 AGENT_NAME = "Nova Mart 雙語客服"
 SECRET_NAME = "TOOL_SECRET"
 KB_NAME = "Nova Mart return policy"
+# An existing knowledge-base document to attach instead of uploading
+# agent/knowledge/return-policy.md. Set to None to upload the file.
+KB_ID = "QkXJSgtvhnY27iPvXW9M"
 LLM = "gemini-2.5-flash"
 TTS_MODEL = "eleven_v4_turbo"
-# Yui (Taiwan Mandarin, cmn-TW) from the shared library; added to the account if missing.
-ZH_VOICE = "kGjJqO6wdwRN9iJsoeIC"
-ZH_VOICE_NAME = "Yui - Taiwan Mandarin (Nova Mart)"
+# Lee Ting Ting (Taiwan Mandarin, cmn-TW) from the shared library; added to the account if missing.
+ZH_VOICE = "gU2KtIu9OZWy3KqiqNj6"
+ZH_VOICE_NAME = "Lee Ting Ting - Taiwan Mandarin (Nova Mart)"
 # Jessica, a premade English voice every account has.
 EN_VOICE = "cgSgspJ2msm6clMCkdW9"
 
@@ -87,6 +90,10 @@ def secret_id():
 
 
 def kb_doc():
+    if KB_ID:
+        d = call("GET", f"/v1/convai/knowledge-base/{KB_ID}")
+        print(f"knowledge base: attach existing {d['id']}")
+        return {"type": d["type"], "name": d["name"], "id": d["id"], "usage_mode": "prompt"}
     d = find("/v1/convai/knowledge-base?page_size=100", "documents", KB_NAME, lambda x: x.get("name"))
     if not d:
         text = (ROOT / "agent/knowledge/return-policy.md").read_text()
