@@ -1,0 +1,20 @@
+[project]
+name = "nova-order-api"
+version = "0.1.0"
+description = "Mock order API for a bilingual (zh-TW / en) e-commerce voice agent"
+requires-python = ">=3.13"
+dependencies = [
+    "fastapi",
+]
+
+[dependency-groups]
+dev = [
+    "workers-py",
+    "workers-runtime-sdk",
+    "pytest",
+    "httpx",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
