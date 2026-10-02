@@ -1,0 +1,4 @@
+Call this tool only when the customer's whole turn is in a different language
+from the current one, or when they explicitly ask to switch language.
+Do NOT switch for English words inside a Chinese sentence
+(e.g. "我想 return 這筆訂單"), order IDs, product names or brand names.

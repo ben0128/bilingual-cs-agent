@@ -1,0 +1,24 @@
+{
+  "_note": "Reference shape. Create the tool in the ElevenAgents dashboard (Tools > Webhook), then `pull` with the CLI and compare field names. Replace <WORKER_URL> and attach the TOOL_SECRET secret as the X-Tool-Secret header.",
+  "type": "webhook",
+  "name": "get_order_status",
+  "description": "Look up the shipping status of one order. Call only after the customer has confirmed the order ID you read back.",
+  "api_schema": {
+    "url": "https://<WORKER_URL>/tools/order-status",
+    "method": "POST",
+    "request_body_schema": {
+      "type": "object",
+      "properties": {
+        "order_id": {
+          "type": "string",
+          "description": "8-digit order ID, digits only, no spaces or dashes. Convert spoken Chinese numerals to digits."
+        },
+        "phone_last4": {
+          "type": "string",
+          "description": "Last 4 digits of the phone number on the order, digits only."
+        }
+      },
+      "required": ["order_id", "phone_last4"]
+    }
+  }
+}
