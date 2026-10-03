@@ -4,7 +4,7 @@
 
 - **語音**：ElevenAgents（辨識、LLM、合成、語言偵測）
 - **訂單 API**：FastAPI，部署在 Cloudflare Workers（Python Workers）
-- **Demo 頁**：同一個 Worker 提供的靜態頁面，內嵌 ElevenAgents widget
+- **Demo 頁**：同一個 Worker 提供的靜態頁面，用 @elevenlabs/client SDK 直接通話，即時顯示逐字稿、語言切換、訂單卡片和 tool call 結果
 
 ```text
 bilingual-cs-agent/
@@ -122,7 +122,7 @@ WORKER_URL=https://nova-order-api.<你的子網域>.workers.dev python3 agent/se
 
 1. 把 `order-api/public/index.html` 裡 `agent-id` 換成你的 Agent ID。
 2. `uv run pywrangler deploy`
-3. 打開 workers.dev 網址，右下角就是通話按鈕。
+3. 打開 workers.dev 網址，按「開始通話」。
 
 ## 測試訂單
 

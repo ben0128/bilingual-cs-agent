@@ -31,6 +31,21 @@ TTS_MODEL = "eleven_v4_turbo"
 # medical_and_legal_information stay off: return-rights questions can read as legal
 # and trip the filter, and the prompt already declines off-topic requests.
 CONTENT_GUARDRAILS = ["sexual", "violence", "harassment", "self_harm", "profanity"]
+# Events streamed to the browser. The demo page reads the tool ones to show each tool
+# call with its result and the language switch; webhook results only reach the page
+# through agent_tool_response_full_payload.
+CLIENT_EVENTS = [
+    "audio",
+    "interruption",
+    "agent_response",
+    "agent_response_correction",
+    "user_transcript",
+    "agent_tool_request",
+    "agent_tool_response",
+    "agent_tool_response_full_payload",
+    "vad_score",
+    "guardrail_triggered",
+]
 # Lee Ting Ting (Taiwan Mandarin, cmn-TW) from the shared library; added to the account if missing.
 ZH_VOICE = "gU2KtIu9OZWy3KqiqNj6"
 ZH_VOICE_NAME = "Lee Ting Ting - Taiwan Mandarin (Nova Mart)"
@@ -177,6 +192,7 @@ def agent(tool_ids, kb):
                 },
             },
             "tts": {"model_id": TTS_MODEL, "voice_id": ZH_VOICE},
+            "conversation": {"client_events": CLIENT_EVENTS},
             "language_presets": {
                 "en": {
                     "overrides": {
