@@ -90,7 +90,7 @@ npx wrangler secret put TOOL_SECRET # 貼上同一把密鑰
 
 ### 自動（建議）
 
-`agent/setup_agent.py` 用 API 建好下面手動步驟的所有東西：secret、知識庫、兩支 webhook tool、Agent、中英文聲音，並限制只有你的 workers.dev 網域能開啟通話。只用 Python 標準函式庫，不用裝套件。
+`agent/setup_agent.py` 用 API 建好下面手動步驟的所有東西：secret、知識庫、兩支 webhook tool、Agent、中英文聲音，並限制只有你的 workers.dev 網域能開啟通話，也開啟內容過濾（色情、暴力、騷擾、自傷、髒話）。只用 Python 標準函式庫，不用裝套件。
 
 1. 在 ElevenLabs 建一把 API key，權限只開 **ElevenAgents 讀寫**、**Voices 讀寫**，其他全關。
 2. 寫進 repo 根目錄的 `.env`（已在 `.gitignore`）：`ELEVENLABS_API_KEY=...`

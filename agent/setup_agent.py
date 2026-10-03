@@ -27,6 +27,10 @@ KB_NAME = "Nova Mart return policy"
 KB_ID = "QkXJSgtvhnY27iPvXW9M"
 LLM = "gemini-2.5-flash"
 TTS_MODEL = "eleven_v4_turbo"
+# Content categories blocked on this public demo. religion_or_politics and
+# medical_and_legal_information stay off: return-rights questions can read as legal
+# and trip the filter, and the prompt already declines off-topic requests.
+CONTENT_GUARDRAILS = ["sexual", "violence", "harassment", "self_harm", "profanity"]
 # Lee Ting Ting (Taiwan Mandarin, cmn-TW) from the shared library; added to the account if missing.
 ZH_VOICE = "gU2KtIu9OZWy3KqiqNj6"
 ZH_VOICE_NAME = "Lee Ting Ting - Taiwan Mandarin (Nova Mart)"
@@ -186,6 +190,14 @@ def agent(tool_ids, kb):
             "auth": {
                 "enable_auth": False,
                 "allowlist": [{"hostname": WORKER.removeprefix("https://")}],
+            },
+            "guardrails": {
+                "content": {
+                    "config": {
+                        c: {"is_enabled": True, "threshold": "medium"}
+                        for c in CONTENT_GUARDRAILS
+                    },
+                },
             },
         },
     }
